@@ -1,7 +1,7 @@
 package tetris;
 
 import javax.swing.SwingUtilities;
-import tetris.window.GameForm;
+import tetris.gui.GameForm;
 
 public class Main
 {

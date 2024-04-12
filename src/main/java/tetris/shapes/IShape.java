@@ -7,7 +7,7 @@ public class IShape extends Shape
 	public IShape()
 	{
 		super(new int[][] {{1, 1, 1, 1}});
-		color = new Color(0,191,255);
+		color = new Color(0, 191, 255);
 	}
 	
 	@Override

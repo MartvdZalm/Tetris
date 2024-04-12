@@ -1,32 +1,26 @@
-package tetris.window;
+package tetris.gui.screens;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.util.Random;
 
-import javax.swing.JPanel;
 import tetris.shapes.*;
 
-public class GameArea extends JPanel
+public class GameScreen extends Screen
 {
-	public final int screenWidth = 400;
-	public final int screenHeight = 720;
-	
-	public final int gridRows = 18;
-	public final int gridCols = 10;
-	public final int tileSize = screenWidth / gridCols;
+	public final int screenRows = 18;
+	public final int screenCols = 10;
+	public final int tileSize = screenWidth / screenCols;
+
 	private Color[][] background;
-	
 	private Shape block;
 	private Shape[] blocks;
 	
-	public GameArea()
+	public GameScreen()
 	{	
-		this.setPreferredSize(new Dimension(screenWidth, screenHeight));
 		this.setBackground(new Color(24, 24, 24));
 		
-		background = new Color[gridRows][gridCols];
+		background = new Color[screenRows][screenCols];
 		blocks = new Shape[] {
 			new IShape(),
 			new JShape(),
@@ -43,7 +37,7 @@ public class GameArea extends JPanel
 		Random r = new Random();
 		
 		block = blocks[r.nextInt(blocks.length)];
-		block.spawn(gridCols);
+		block.spawn(screenCols);
 	}
 	
 	public boolean isBlockOutOfBounds()
@@ -113,12 +107,12 @@ public class GameArea extends JPanel
 			block.setX(0);
 		}
 
-		if (block.getRightEdge() > gridCols) {
-			block.setX(gridCols - block.getWidth());
+		if (block.getRightEdge() > screenCols) {
+			block.setX(screenCols - block.getWidth());
 		}
 
-		if (block.getBottomEdge() >= gridRows) {
-			block.setY(gridRows - block.getHeight());
+		if (block.getBottomEdge() >= screenRows) {
+			block.setY(screenRows - block.getHeight());
 		}
 
 		repaint();
@@ -126,7 +120,7 @@ public class GameArea extends JPanel
 	
 	private boolean checkBottom()
 	{
-		if (block.getBottomEdge() == gridRows) {
+		if (block.getBottomEdge() == screenRows) {
 			return false;
 		}
 		
@@ -190,7 +184,7 @@ public class GameArea extends JPanel
 	
 	private boolean checkRight()
 	{
-		if (block.getRightEdge() == gridCols) {
+		if (block.getRightEdge() == screenCols) {
 			return false;
 		}
 		
@@ -224,10 +218,10 @@ public class GameArea extends JPanel
 	{
 		boolean lineFilled;
 		
-		for (int r = gridRows - 1; r >= 0; r--) {
+		for (int r = screenRows - 1; r >= 0; r--) {
 			lineFilled = true;
 
-			for (int c = 0; c < gridCols; c++) {
+			for (int c = 0; c < screenCols; c++) {
 				if (background[r][c] == null) {
 					lineFilled = false;
 					break;
@@ -246,7 +240,7 @@ public class GameArea extends JPanel
 	
 	private void clearLine(int r)
 	{
-		for (int i = 0; i < gridCols; i++) {
+		for (int i = 0; i < screenCols; i++) {
 			background[r][i] = null;
 		}
 	}
@@ -254,7 +248,7 @@ public class GameArea extends JPanel
 	private void shiftDown(int r)
 	{	
 		for (int row = r; row > 0; row--) {
-			for (int col = 0; col < gridCols; col++) {
+			for (int col = 0; col < screenCols; col++) {
 				background[row][col] = background[row - 1][col];
 			}
 		}
@@ -303,8 +297,8 @@ public class GameArea extends JPanel
 	{
 		Color color;
 		
-		for (int r = 0; r < gridRows; r++) {
-			for (int c = 0; c < gridCols; c++) {
+		for (int r = 0; r < screenRows; r++) {
+			for (int c = 0; c < screenCols; c++) {
 				color = background[r][c];
 				
 				if (color != null) {

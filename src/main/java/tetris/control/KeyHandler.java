@@ -3,15 +3,16 @@ package tetris.control;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import tetris.window.GameArea;
+import tetris.gui.screens.ScreenTypes;
+import tetris.gui.GameForm;
 
 public class KeyHandler implements KeyListener
 {
-	private GameArea gameArea;
+	private GameForm gameForm;
 	
-	public KeyHandler(GameArea gameArea)
+	public KeyHandler(GameForm gameForm)
 	{
-		this.gameArea = gameArea;
+		this.gameForm = gameForm;
 	}
 
 	@Override
@@ -25,20 +26,38 @@ public class KeyHandler implements KeyListener
 	{	
 		int code = e.getKeyCode();
 		
+		if (this.gameForm.getCurrentScreenType() == ScreenTypes.TITLE) {
+			titleScreen(code);
+		}
+
+		if (this.gameForm.getCurrentScreenType() == ScreenTypes.GAME) {
+			gameScreen(code);
+		}
+	}
+
+	private void titleScreen(int code)
+	{	
+		if (code == KeyEvent.VK_ENTER) {
+			this.gameForm.startGame();
+		}
+	}
+
+	private void gameScreen(int code)
+	{
 		if (code == KeyEvent.VK_UP) {
-			gameArea.rotateBlock();
+			this.gameForm.getGameScreen().rotateBlock();
 		}
 
 		if (code == KeyEvent.VK_DOWN) {
-			gameArea.dropBlock();
+			this.gameForm.getGameScreen().dropBlock();
 		}
 
 		if (code == KeyEvent.VK_LEFT) {
-			gameArea.moveBlockLeft();
+			this.gameForm.getGameScreen().moveBlockLeft();
 		}
 
 		if (code == KeyEvent.VK_RIGHT) {
-			gameArea.moveBlockRight();
-		}	
-	}
+			this.gameForm.getGameScreen().moveBlockRight();
+		}
+	} 
 }
