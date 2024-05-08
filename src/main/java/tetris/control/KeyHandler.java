@@ -26,20 +26,20 @@ public class KeyHandler implements KeyListener
 	{	
 		int code = e.getKeyCode();
 		
-		if (this.gameForm.getCurrentScreenType() == ScreenTypes.TITLE) {
+		if (this.gameForm.getScreenType() == ScreenTypes.TITLE) {
 			titleScreen(code);
 		}
 
-		if (this.gameForm.getCurrentScreenType() == ScreenTypes.GAME) {
+		if (this.gameForm.getScreenType() == ScreenTypes.GAME) {
 			gameScreen(code);
 		}
 	}
 
 	private void titleScreen(int code)
 	{	
-		if (code == KeyEvent.VK_ENTER) {
-			this.gameForm.startGame();
-		}
+		// if (code == KeyEvent.VK_ENTER) {
+		// 	this.gameForm.switchScreen(ScreenTypes.GAME);
+		// }
 	}
 
 	private void gameScreen(int code)
