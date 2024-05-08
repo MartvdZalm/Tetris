@@ -11,65 +11,73 @@ import tetris.gui.screens.*;
 
 public class GameForm extends JFrame
 {
-    private GameScreen gameScreen;
-    private TitleScreen titleScreen;
-    private KeyHandler keyHandler;
+    private Screen screen;
+    private ScreenTypes screenType;
 
-    private ScreenTypes currentScreenType;
+    private KeyHandler keyHandler;
+    private GameThread gameThread;
 
     public GameForm()
     {
+        // Game Environment
         this.setResizable(false);
         this.setPreferredSize(new Dimension(400, 720));
 
-        titleScreen = new TitleScreen();
-        gameScreen = new GameScreen();
         keyHandler = new KeyHandler(this);
-
-        this.add(titleScreen);
-        currentScreenType = ScreenTypes.TITLE;
+        switchScreen(ScreenTypes.TITLE);
 
         this.pack();
         this.setLocationRelativeTo(null);
         this.addKeyListener(keyHandler);
+
+        new GameThread(this).start();
     }
 
-    public void switchScreen(ScreenTypes newScreen)
+    public void switchScreen(ScreenTypes screenType)
     {
         getContentPane().removeAll();
 
-        switch (newScreen) {
-            case TITLE:
-                getContentPane().add(titleScreen);
-                break;
-            case GAME:
-                getContentPane().add(gameScreen);
-                break;
+        switch (screenType) {
+
+            case TITLE: {
+                this.screen = new TitleScreen();
+                getContentPane().add(this.screen);
+            } break;
+
+            case GAME: {
+                this.screen = new GameScreen();
+                getContentPane().add(this.screen);
+            } break;
         }
 
-        currentScreenType = newScreen;
+        this.screenType = screenType;
         revalidate();
         repaint();
     }
 
-    public void startGame()
+    public ScreenTypes getScreenType()
     {
-        switchScreen(ScreenTypes.GAME);
-        new GameThread(gameScreen, this).start();
+    	return this.screenType;
     }
 
-    public ScreenTypes getCurrentScreenType()
+    public Screen getScreen()
     {
-    	return this.currentScreenType;
+    	return this.screen; 
     }
 
     public TitleScreen getTitleScreen()
     {
-    	return this.titleScreen; 
+        if (this.screen instanceof TitleScreen) {
+            return (TitleScreen) this.screen;
+        }
+        return null;
     }
 
     public GameScreen getGameScreen()
     {
-    	return this.gameScreen; 
+        if (this.screen instanceof GameScreen) {
+            return (GameScreen) this.screen;
+        }
+        return null;
     }
 }
