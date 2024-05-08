@@ -325,6 +325,9 @@ public class GameScreen extends Screen
 		super.paintComponent(g);
 		
 		drawBackground(g);
-		drawBlock(g);
+
+		if (block != null) {
+			drawBlock(g);
+		}
 	}
 }

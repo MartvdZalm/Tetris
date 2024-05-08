@@ -89,16 +89,12 @@ public class TitleScreen extends Screen
 		drawGridSquare(g, color, x * tileSize, y * tileSize);
 		drawGridSquare(g, color, (x + 1) * tileSize, y * tileSize);
 		drawGridSquare(g, color, (x + 2) * tileSize, y * tileSize);
-
 		drawGridSquare(g, color, x * tileSize, (y + 1) * tileSize);
 		drawGridSquare(g, color, x * tileSize, (y + 2) * tileSize);
-
 		drawGridSquare(g, color, (x + 1) * tileSize, (y + 2) * tileSize);
 		drawGridSquare(g, color, (x + 2) * tileSize, (y + 2) * tileSize);
-
 		drawGridSquare(g, color, (x + 2) * tileSize, (y + 3) * tileSize);
 		drawGridSquare(g, color, (x + 2) * tileSize, (y + 4) * tileSize);
-
 		drawGridSquare(g, color, (x + 1)* tileSize, (y + 4) * tileSize);
 		drawGridSquare(g, color, x * tileSize, (y + 4) * tileSize);
 	}
