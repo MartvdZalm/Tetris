@@ -1,7 +1,10 @@
 package tetris.gui.screens;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 
 public class TitleScreen extends Screen
 {
@@ -9,18 +12,15 @@ public class TitleScreen extends Screen
 
 	public TitleScreen()
 	{
-		this.setBackground(new Color(24, 24, 24));
-
-		repaint();
+		setBackground(new Color(18, 18, 24));
 	}
 
-	private void draw(Graphics g)
+	private void drawLogo(Graphics g)
 	{
 		int x = 4;
 		int y = 10;
 		Color color = Color.magenta;
 
-		// Letter T
 		drawGridSquare(g, color, x * tileSize, y * tileSize);
 		drawGridSquare(g, color, (x + 1) * tileSize, y * tileSize);
 		drawGridSquare(g, color, (x + 2) * tileSize, y * tileSize);
@@ -32,7 +32,6 @@ public class TitleScreen extends Screen
 		x += 4;
 		color = new Color(0, 191, 255);
 
-		// Letter E
 		drawGridSquare(g, color, x * tileSize, y * tileSize);
 		drawGridSquare(g, color, (x + 1) * tileSize, y * tileSize);
 		drawGridSquare(g, color, (x + 2) * tileSize, y * tileSize);
@@ -48,7 +47,6 @@ public class TitleScreen extends Screen
 		x += 4;
 		color = Color.red;
 
-		// Letter T
 		drawGridSquare(g, color, x * tileSize, y * tileSize);
 		drawGridSquare(g, color, (x + 1) * tileSize, y * tileSize);
 		drawGridSquare(g, color, (x + 2) * tileSize, y * tileSize);
@@ -60,7 +58,6 @@ public class TitleScreen extends Screen
 		x += 4;
 		color = Color.blue;
 
-		// Letter R
 		drawGridSquare(g, color, x * tileSize, y * tileSize);
 		drawGridSquare(g, color, (x + 1) * tileSize, y * tileSize);
 		drawGridSquare(g, color, (x + 2) * tileSize, y * tileSize);
@@ -76,7 +73,6 @@ public class TitleScreen extends Screen
 		x += 4;
 		color = Color.yellow;
 
-		// Letter I
 		drawGridSquare(g, color, x * tileSize, y * tileSize);
 		drawGridSquare(g, color, x * tileSize, (y + 2) * tileSize);
 		drawGridSquare(g, color, x * tileSize, (y + 3) * tileSize);
@@ -85,7 +81,6 @@ public class TitleScreen extends Screen
 		x += 2;
 		color = Color.green;
 
-		// Letter S
 		drawGridSquare(g, color, x * tileSize, y * tileSize);
 		drawGridSquare(g, color, (x + 1) * tileSize, y * tileSize);
 		drawGridSquare(g, color, (x + 2) * tileSize, y * tileSize);
@@ -95,7 +90,7 @@ public class TitleScreen extends Screen
 		drawGridSquare(g, color, (x + 2) * tileSize, (y + 2) * tileSize);
 		drawGridSquare(g, color, (x + 2) * tileSize, (y + 3) * tileSize);
 		drawGridSquare(g, color, (x + 2) * tileSize, (y + 4) * tileSize);
-		drawGridSquare(g, color, (x + 1)* tileSize, (y + 4) * tileSize);
+		drawGridSquare(g, color, (x + 1) * tileSize, (y + 4) * tileSize);
 		drawGridSquare(g, color, x * tileSize, (y + 4) * tileSize);
 	}
 
@@ -111,7 +106,22 @@ public class TitleScreen extends Screen
 	public void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
-		
-		draw(g);
+
+		Graphics2D g2 = (Graphics2D) g;
+		g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+
+		drawLogo(g);
+
+		g.setColor(Color.WHITE);
+		g.setFont(new Font("Monospaced", Font.BOLD, 18));
+		String prompt = "Press ENTER to start";
+		int textWidth = g.getFontMetrics().stringWidth(prompt);
+		g.drawString(prompt, (screenWidth - textWidth) / 2, screenHeight - 80);
+
+		g.setColor(new Color(140, 140, 150));
+		g.setFont(new Font("Monospaced", Font.PLAIN, 12));
+		String hint = "Arrow keys · Space · C to hold · P to pause";
+		textWidth = g.getFontMetrics().stringWidth(hint);
+		g.drawString(hint, (screenWidth - textWidth) / 2, screenHeight - 50);
 	}
 }

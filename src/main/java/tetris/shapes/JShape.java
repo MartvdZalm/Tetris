@@ -6,7 +6,13 @@ public class JShape extends Shape
 {
 	public JShape()
 	{
-		super(new int[][] {{0, 1}, {0, 1}, {1, 1}});
+		super(new int[][] {{0, 1}, {0, 1}, {1, 1}}, 1);
 		color = Color.blue;
+	}
+
+	@Override
+	public Shape createCopy()
+	{
+		return new JShape();
 	}
 }

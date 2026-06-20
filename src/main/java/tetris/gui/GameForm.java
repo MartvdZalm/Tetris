@@ -1,8 +1,6 @@
 package tetris.gui;
 
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 
@@ -11,73 +9,70 @@ import tetris.gui.screens.*;
 
 public class GameForm extends JFrame
 {
-    private Screen screen;
-    private ScreenTypes screenType;
+	private Screen screen;
+	private ScreenTypes screenType;
+	private KeyHandler keyHandler;
 
-    private KeyHandler keyHandler;
-    private GameThread gameThread;
+	public GameForm()
+	{
+		setTitle("Tetris");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setResizable(false);
 
-    public GameForm()
-    {
-        // Game Environment
-        this.setResizable(false);
-        this.setPreferredSize(new Dimension(400, 720));
+		keyHandler = new KeyHandler(this);
+		switchScreen(ScreenTypes.TITLE);
 
-        keyHandler = new KeyHandler(this);
-        switchScreen(ScreenTypes.TITLE);
+		pack();
+		setLocationRelativeTo(null);
+		addKeyListener(keyHandler);
+		setFocusable(true);
+	}
 
-        this.pack();
-        this.setLocationRelativeTo(null);
-        this.addKeyListener(keyHandler);
+	public void switchScreen(ScreenTypes screenType)
+	{
+		if (this.screen instanceof GameScreen) {
+			((GameScreen) this.screen).dispose();
+		}
 
-        new GameThread(this).start();
-    }
+		getContentPane().removeAll();
 
-    public void switchScreen(ScreenTypes screenType)
-    {
-        getContentPane().removeAll();
+		switch (screenType) {
+			case TITLE:
+				this.screen = new TitleScreen();
+				break;
+			case GAME:
+				this.screen = new GameScreen();
+				break;
+			default:
+				this.screen = new TitleScreen();
+				break;
+		}
 
-        switch (screenType) {
+		getContentPane().add(this.screen);
+		this.screenType = screenType;
+		revalidate();
+		repaint();
+		requestFocus();
+	}
 
-            case TITLE: {
-                this.screen = new TitleScreen();
-                getContentPane().add(this.screen);
-            } break;
+	public ScreenTypes getScreenType()
+	{
+		return screenType;
+	}
 
-            case GAME: {
-                this.screen = new GameScreen();
-                getContentPane().add(this.screen);
-            } break;
-        }
+	public TitleScreen getTitleScreen()
+	{
+		if (screen instanceof TitleScreen) {
+			return (TitleScreen) screen;
+		}
+		return null;
+	}
 
-        this.screenType = screenType;
-        revalidate();
-        repaint();
-    }
-
-    public ScreenTypes getScreenType()
-    {
-    	return this.screenType;
-    }
-
-    public Screen getScreen()
-    {
-    	return this.screen; 
-    }
-
-    public TitleScreen getTitleScreen()
-    {
-        if (this.screen instanceof TitleScreen) {
-            return (TitleScreen) this.screen;
-        }
-        return null;
-    }
-
-    public GameScreen getGameScreen()
-    {
-        if (this.screen instanceof GameScreen) {
-            return (GameScreen) this.screen;
-        }
-        return null;
-    }
+	public GameScreen getGameScreen()
+	{
+		if (screen instanceof GameScreen) {
+			return (GameScreen) screen;
+		}
+		return null;
+	}
 }
